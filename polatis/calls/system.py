@@ -15,3 +15,10 @@ class System(Transport):
 
         return(_response.status_code, _response.content)
 
+    def batteries(self):
+
+        _call = ('api/data/polatis-switch:batteries')
+        _response = self.get(_call)
+
+        return(_response.status_code, _response.content)
+

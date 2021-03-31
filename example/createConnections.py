@@ -24,14 +24,21 @@ class crossconnection(object):
 
     def connect(self):
         self._pol = Polatis()
-        self._pol.connect('192.168.2.3',8008,'newton','newton')
+     #   self._pol.connect('192.168.2.3',8008,'newton','newton')
 
     def createCCfromExel(self,file):
         _wb = load_workbook(file)
         _sheet = _wb['CC']
+        _A = []
+        _Z = []
         for row_cells in _sheet.iter_rows(min_row=2):
             print ('CellA= %s ,CellB= %s'% (row_cells[1].value, row_cells[2].value))
-            self._pol.createCrossConnection(row_cells[0],row_cells[2],False)
+            _A.append(row_cells[1].value)
+            _Z.append(row_cells[2].value)
+
+           # self._pol.createCrossConnection(row_cells[0],row_cells[2],False)
+        print(_A)
+        self._pol.createCrossConnectionBulk(_A,_Z)
 
     def start(self):
         self.readConfig()

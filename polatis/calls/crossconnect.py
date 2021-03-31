@@ -25,6 +25,23 @@ class CrossConnect(Transport):
 
         return(_response.status_code, _response.content)
 
+    def createCrossConnectionBulk(self,portA,portZ):
+
+        _call = ('api/data/optical-switch:cross-connects')
+
+        _cc = et.Element("cross-connects>")
+        for a,z in zip(portA,portZ):
+            _pair = et.SubElement(_cc,"pair")
+            _ingress = et.SubElement(_pair,"ingress")
+            _ingress.text = str(a)
+            _egress = et.SubElement(_pair,"egress")
+            _egress.text = str(z)
+
+        response = self.patch(_call, et.tostring(_cc))
+
+        print(et.tostring(_cc))
+
+
     def deleteCrossConnection(self,port=0):
 
         if port == 0:
